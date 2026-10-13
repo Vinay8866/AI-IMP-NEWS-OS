@@ -51,7 +51,7 @@ class SocialScheduleRepository:
                 article_output_row.get("title", ""),
                 article_output_row.get("hook", ""),
                 caption,
-                article_output_row.get("file_path", "").replace(".md", ".png") if article_output_row.get("file_path") else "",
+                article_output_row.get("image_path") or "",
                 article_output_row.get("link", ""),
                 article_output_row.get("source", ""),
                 article_output_row.get("category", ""),

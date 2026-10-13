@@ -156,6 +156,40 @@ class OutputRepository:
         finally:
             conn.close()
 
+    def get_social_candidates(self, run_date=None):
+        """Return published, QA-approved articles not yet scheduled."""
+        conn = get_connection()
+        try:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT
+                    o.*,
+                    p.image_path AS image_path,
+                    p.link AS link,
+                    p.qa_approved AS qa_approved
+                FROM articles_output AS o
+                JOIN pipeline_stages AS p
+                    ON p.run_date = o.run_date
+                    AND p.news_index = o.news_index
+                    AND p.title = o.title
+                WHERE o.decision = 'PUBLISH_QUEUE'
+                    AND o.publish_status = 'published'
+                    AND p.publish_status = 'published'
+                    AND p.qa_approved = 1
+                    AND (? IS NULL OR o.run_date = ?)
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM social_schedule AS s
+                        WHERE s.article_id = o.id
+                    )
+                ORDER BY o.run_date ASC, o.news_index ASC
+            """, (run_date, run_date))
+            return [dict(row) for row in cursor.fetchall()]
+        finally:
+            conn.close()
+
+
+
     def get_publish_queue(self):
         """Publish-ready articles"""
         conn = get_connection()

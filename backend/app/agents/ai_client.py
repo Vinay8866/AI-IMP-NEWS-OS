@@ -27,8 +27,14 @@ def generate(prompt: str, task_name: str = "AI Task", max_retries: int = 2) -> s
             return result
 
     # 3. Template Fallback
-    print(f"  [!] {task_name}: Using template fallback")
-    return _generate_template(prompt, task_name)
+    # print(f"  [!] {task_name}: Using template fallback")
+    # return _generate_template(prompt, task_name)
+
+      # Stop when no AI provider returns usable text.
+    raise RuntimeError(
+        f"{task_name}: AI generation failed. "
+        "Pipeline stopped instead of using generic template content."
+    )
 
 
 def _call_freellmapi(prompt: str, task_name: str, max_retries: int) -> str:

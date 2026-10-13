@@ -89,7 +89,7 @@ def get_queue():
     rewrite_queue = repo.get_rewrite_queue()
     return {
         "publish_queue": publish_queue,
-        "rewrite_queue": publish_queue,  # keeping compat
+        "rewrite_queue": rewrite_queue, # keeping compat
         "publish_count": len(publish_queue),
         "rewrite_count": len(rewrite_queue),
         "publish": publish_queue,
@@ -147,11 +147,23 @@ def get_journey_by_date(run_date: str):
     return {"run_date": run_date, "journey": journey, "counts": counts}
 
 
-@router.get("/journey/raw-news")
+# @router.get("/journey/raw-news")
+# def get_raw_news(limit: int = 50):
+#     repo = NewsRepository()
+#     latest = repo.latest(limit=limit)
+#     return {"news": latest, "count": len(latest)}
+
+@router.get("/raw-news")
 def get_raw_news(limit: int = 50):
     repo = NewsRepository()
-    latest = repo.latest(limit=limit)
-    return {"news": latest, "count": len(latest)}
+    articles = repo.latest(limit=limit)
+
+    return {
+        "raw_news": articles,
+        "news": articles,
+        "count": len(articles),
+        "total": repo.count()
+    }
 
 
 @router.get("/analytics/summary")
@@ -303,7 +315,13 @@ def post_social_now(post_id: int):
             repo = SocialScheduleRepository()
             fb_id = result.get("results", {}).get("facebook")
             ig_id = result.get("results", {}).get("instagram")
-            repo.update_status(post_id, "posted", fb_post_id=str(fb_id) if fb_id else None, ig_post_id=str(ig_id) if ig_id else None)
+            status = "simulated" if result.get("mode") == "mock" else "posted"
+            repo.update_status(
+                post_id,
+                status,
+                fb_post_id=str(fb_id) if fb_id else None,
+                ig_post_id=str(ig_id) if ig_id else None
+            )
             return {"status": "success", "result": result}
         else:
             repo = SocialScheduleRepository()
@@ -328,10 +346,10 @@ def auto_schedule_all_from_publish_queue():
     from app.database.repository import OutputRepository
 
     output_repo = OutputRepository()
-    publish_queue = output_repo.get_publish_queue()
+    publish_queue = output_repo.get_social_candidates()
 
     if not publish_queue:
-        return {"status": "success", "scheduled": 0, "message": "No articles in publish queue"}
+        return {"status": "success", "scheduled": 0, "message": "No eligible published articles to schedule"}
 
     social_repo = SocialScheduleRepository()
     scheduled = 0

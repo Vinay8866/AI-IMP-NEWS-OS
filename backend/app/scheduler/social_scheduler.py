@@ -62,7 +62,13 @@ def scheduled_social_job():
                     fb_id = result.get("results", {}).get("facebook")
                     ig_id = result.get("results", {}).get("instagram")
                     # For mock mode, fb_id is mock_xxx
-                    repo.update_status(post["id"], "posted", fb_post_id=str(fb_id) if fb_id else None, ig_post_id=str(ig_id) if ig_id else None)
+                    status = "simulated" if result.get("mode") == "mock" else "posted"
+                    repo.update_status(
+                        post["id"],
+                        status,
+                        fb_post_id=str(fb_id) if fb_id else None,
+                        ig_post_id=str(ig_id) if ig_id else None
+                    )
                     log.info(f"✅ Posted ID {post['id']} -> FB: {fb_id}, IG: {ig_id} (mode: {result.get('mode')})")
                 else:
                     repo.update_status(post["id"], "failed", error=result.get("error", "Unknown error"))
@@ -140,4 +146,4 @@ def start_blocking_scheduler(hours=[8, 16, 0]):
 
 if __name__ == "__main__":
     # Combined scheduler - both pipeline + social
-    start_combined_scheduler(hours=[8, 16, 0])
+    start_combined_scheduler(pipeline_hours=[8, 16, 0])

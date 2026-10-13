@@ -5,46 +5,190 @@
 */
 
 // ===== LOAD STATS =====
+// async function loadStats() {
+//     const data = await API.getStats();
+//     if (!data) return;
+
+//     const el = (id) => document.getElementById(id);
+
+//     if (el("stat-news")) el("stat-news").textContent = data.todays_news || 0;
+//     if (el("stat-published")) el("stat-published").textContent = data.published_today || 0;
+//     if (el("stat-queue")) el("stat-queue").textContent = data.publish_queue || 0;
+//     if (el("stat-rewrite")) el("stat-rewrite").textContent = data.failed_jobs || 0;
+//     if (el("stat-quality")) el("stat-quality").textContent = data.avg_quality || 0;
+//     if (el("stat-confidence")) el("stat-confidence").textContent = `Confidence: ${data.avg_confidence || 0}%`;
+//     if (el("stat-news-change")) el("stat-news-change").textContent = `${data.todays_news || 0} articles processed`;
+//     if (el("badge-queue")) el("badge-queue").textContent = data.publish_queue || 0;
+// }
+
 async function loadStats() {
-    const data = await API.getStats();
+    const [data, queue] = await Promise.all([
+        API.getStats(),
+        API.getQueue()
+    ]);
+
     if (!data) return;
 
-    const el = (id) => document.getElementById(id);
+    const latest = data.latest_run || {};
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
 
-    if (el("stat-news")) el("stat-news").textContent = data.todays_news || 0;
-    if (el("stat-published")) el("stat-published").textContent = data.published_today || 0;
-    if (el("stat-queue")) el("stat-queue").textContent = data.publish_queue || 0;
-    if (el("stat-rewrite")) el("stat-rewrite").textContent = data.failed_jobs || 0;
-    if (el("stat-quality")) el("stat-quality").textContent = data.avg_quality || 0;
-    if (el("stat-confidence")) el("stat-confidence").textContent = `Confidence: ${data.avg_confidence || 0}%`;
-    if (el("stat-news-change")) el("stat-news-change").textContent = `${data.todays_news || 0} articles processed`;
-    if (el("badge-queue")) el("badge-queue").textContent = data.publish_queue || 0;
+    const setCardLabel = (id, label, detail) => {
+        const card = document.getElementById(id)?.closest(".stat-card");
+        if (!card) return;
+
+        const labelElement = card.querySelector(".stat-card-label");
+        const detailElement = card.querySelector(".stat-card-change");
+
+        if (labelElement) labelElement.textContent = label;
+        if (detailElement) detailElement.textContent = detail;
+    };
+
+    setText("stat-news", data.raw_news ?? 0);
+    setCardLabel(
+        "stat-news",
+        "Collected News",
+        "All articles stored in database"
+    );
+
+    setText("stat-published", data.published_total ?? 0);
+    setCardLabel(
+        "stat-published",
+        "Locally Published",
+        "All dates"
+    );
+
+    setText("stat-queue", queue?.publish_count ?? "--");
+    setText("stat-rewrite", queue?.rewrite_count ?? "--");
+    setText("badge-queue", queue?.publish_count ?? "--");
+
+    const quality = latest.avg_quality;
+    const confidence = latest.avg_confidence;
+
+    setText(
+        "stat-quality",
+        quality == null ? "--" : Number(quality).toFixed(1)
+    );
+
+    setText(
+        "stat-confidence",
+        confidence == null
+            ? "No run data"
+            : `Confidence: ${Number(confidence).toFixed(1)}% | Run: ${latest.run_date}`
+    );
+
+    const qualityCard = document
+        .getElementById("stat-quality")
+        ?.closest(".stat-card");
+
+    const qualityLabel = qualityCard?.querySelector(".stat-card-label");
+    if (qualityLabel) qualityLabel.textContent = "Latest Run Avg Quality";
 }
 
 // ===== LOAD PIPELINE STATUS =====
+// async function loadPipelineStatus() {
+//     const data = await API.getPipelineStatus();
+//     if (!data) return;
+
+//     const stages = [
+//         { id: "node-rss", conn: null, status: data.rss },
+//         { id: "node-imp", conn: "conn-1", status: data.imp_news },
+//         { id: "node-verify", conn: "conn-2", status: data.verify },
+//         { id: "node-writer", conn: "conn-3", status: data.writer },
+//         { id: "node-image", conn: "conn-4", status: data.image },
+//         { id: "node-publish", conn: "conn-5", status: data.publish }
+//     ];
+
+//     stages.forEach(stage => {
+//         const node = document.getElementById(stage.id);
+//         if (node) {
+//             node.classList.remove("success", "processing", "failed");
+//             if (stage.status === "success") node.classList.add("success");
+//             else if (stage.status === "processing") node.classList.add("processing");
+//         }
+//         if (stage.conn) {
+//             const conn = document.getElementById(stage.conn);
+//             if (conn && stage.status === "success") conn.classList.add("done");
+//         }
+//     });
+// }
+
+
+
 async function loadPipelineStatus() {
-    const data = await API.getPipelineStatus();
-    if (!data) return;
+    const [pipeline, stats] = await Promise.all([
+        API.getPipelineStatus(),
+        API.getStats()
+    ]);
+
+    const journey = Array.isArray(pipeline?.journey)
+        ? pipeline.journey
+        : [];
 
     const stages = [
-        { id: "node-rss", conn: null, status: data.rss },
-        { id: "node-imp", conn: "conn-1", status: data.imp_news },
-        { id: "node-verify", conn: "conn-2", status: data.verify },
-        { id: "node-writer", conn: "conn-3", status: data.writer },
-        { id: "node-image", conn: "conn-4", status: data.image },
-        { id: "node-publish", conn: "conn-5", status: data.publish }
+        {
+            id: "node-imp",
+            conn: "conn-1",
+            check: item => Number(item.imp_selected) === 1
+        },
+        {
+            id: "node-verify",
+            conn: "conn-2",
+            check: item => Number(item.verified) === 1
+        },
+        {
+            id: "node-writer",
+            conn: "conn-3",
+            check: item => Boolean(item.hook && item.story)
+        },
+        {
+            id: "node-image",
+            conn: "conn-4",
+            check: item => Boolean(
+                item.image_path &&
+                ["generated", "placeholder_ready"].includes(item.image_status)
+            )
+        },
+        {
+            id: "node-publish",
+            conn: "conn-5",
+            check: item => item.publish_status === "published"
+        }
     ];
 
+    const rssNode = document.getElementById("node-rss");
+    if (rssNode) {
+        rssNode.classList.remove("success", "processing", "failed");
+        if (stats && Number(stats.raw_news) > 0) {
+            rssNode.classList.add("success");
+        }
+        rssNode.title = stats
+            ? `${stats.raw_news ?? 0} news articles stored`
+            : "Collection status unavailable";
+    }
+
     stages.forEach(stage => {
+        const completed = journey.filter(stage.check).length;
+        const allComplete = journey.length > 0 &&
+            completed === journey.length;
+
         const node = document.getElementById(stage.id);
         if (node) {
             node.classList.remove("success", "processing", "failed");
-            if (stage.status === "success") node.classList.add("success");
-            else if (stage.status === "processing") node.classList.add("processing");
+            if (allComplete) node.classList.add("success");
+
+            node.title = !pipeline
+                ? "Pipeline status unavailable"
+                : journey.length === 0
+                    ? "No run records available"
+                    : `${completed}/${journey.length} completed — run ${pipeline.run_date}`;
         }
-        if (stage.conn) {
-            const conn = document.getElementById(stage.conn);
-            if (conn && stage.status === "success") conn.classList.add("done");
+
+        const connector = document.getElementById(stage.conn);
+        if (connector) {
+            connector.classList.toggle("done", allComplete);
         }
     });
 }

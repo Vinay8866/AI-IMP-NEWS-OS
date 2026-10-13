@@ -26,38 +26,101 @@ class PublishAgent:
         self.stages_repo = PipelineStagesRepository()
         PUBLISHED_DIR.mkdir(parents=True, exist_ok=True)
 
+
+
+    # def publish_one(self, item):
+    #     """एक आर्टिकल पब्लिश करें"""
+    #     file_path_str = item.get("file_path", "")
+    #     if not file_path_str:
+    #         print(f"  ❌ Missing file path for ID {item['id']}")
+    #         return False
+
+    #     source_file = Path(file_path_str)
+    #     if not source_file.exists():
+    #         print(f"  ❌ File missing on disk for ID {item['id']}: {source_file}")
+    #         return False
+
+    #     source_folder = source_file.parent
+    #     run_date = item["run_date"]
+    #     news_index = item["news_index"]
+
+    #     # Destination: docs/published/2026-10-07/news_001
+    #     dest_folder = PUBLISHED_DIR / run_date / f"news_{news_index:03d}"
+
+    #     if dest_folder.exists():
+    #         shutil.rmtree(dest_folder)
+
+    #     # Copy complete folder (blog.md, seo.json, meta.json, etc.)
+    #     shutil.copytree(source_folder, dest_folder)
+
+    #     # Update DBs
+    #     self.output_repo.mark_published(item["id"])
+    #     self.stages_repo.update_published(run_date, news_index)
+
+    #     print(f"  ✅ Published ID #{item['id']} (News_{news_index:03d})")
+    #     print(f"     → {dest_folder}")
+    #     return True
+
+
     def publish_one(self, item):
-        """एक आर्टिकल पब्लिश करें"""
+        """Check QA before publishing an article locally."""
+        from app.agents.final_boss.qa_agent import FinalBossQAAgent
+
+        records = self.stages_repo.get_journey(item["run_date"])
+        article = next(
+            (
+                row for row in records
+                if row["news_index"] == item["news_index"]
+                and row.get("title") == item.get("title")
+            ),
+            None
+        )
+
+        if article is None:
+            print(f"QA BLOCKED: No matching journey for article {item['id']}")
+            return False
+
+        approved, notes = FinalBossQAAgent().inspect_article(article)
+
+        self.stages_repo.update_qa(
+            item["run_date"],
+            item["news_index"],
+            approved,
+            notes
+        )
+
+        if not approved:
+            print(f"QA BLOCKED: Article {item['id']} failed inspection")
+            print(notes)
+            return False
+
         file_path_str = item.get("file_path", "")
         if not file_path_str:
-            print(f"  ❌ Missing file path for ID {item['id']}")
+            print(f"Missing file path for article {item['id']}")
             return False
 
         source_file = Path(file_path_str)
-        if not source_file.exists():
-            print(f"  ❌ File missing on disk for ID {item['id']}: {source_file}")
+        if not source_file.is_file():
+            print(f"Content file missing: {source_file}")
             return False
 
         source_folder = source_file.parent
         run_date = item["run_date"]
         news_index = item["news_index"]
-
-        # Destination: docs/published/2026-10-07/news_001
         dest_folder = PUBLISHED_DIR / run_date / f"news_{news_index:03d}"
 
         if dest_folder.exists():
             shutil.rmtree(dest_folder)
 
-        # Copy complete folder (blog.md, seo.json, meta.json, etc.)
         shutil.copytree(source_folder, dest_folder)
 
-        # Update DBs
         self.output_repo.mark_published(item["id"])
         self.stages_repo.update_published(run_date, news_index)
 
-        print(f"  ✅ Published ID #{item['id']} (News_{news_index:03d})")
-        print(f"     → {dest_folder}")
+        print(f"Published article {item['id']} after QA approval")
+        print(f"Destination: {dest_folder}")
         return True
+
 
     def run(self):
         """Publish Agent Entry Point"""
