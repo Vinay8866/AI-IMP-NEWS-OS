@@ -1,0 +1,33 @@
+{
+  "title": "The Yandex outage probably didn’t blitz Russian bots",
+  "source": "【entity-The Verge¦canonical_name=The Verge】",
+  "category": "Technology",
+  "link": "https://www.theverge.com/tech/1009594/russian-bots-yandex-outage-drone-strikes-debunk",
+  "summary": "Multiple Ukrainian drone strikes over the last week have taken Russian data centers offline and reportedly caused online bot traffic to plummet - but in reality it's probably not the kind of bot activity most people associate with Russia. A chart citing Cloudflare data has been circulating around social media platforms, showing a sharp decline [&#8230;]",
+  "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKS536_AI_HALLUCINATION_C.png?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200",
+  "score": 52,
+  "confidence": 94,
+  "claims": [
+    "The Yandex outage probably didn’t blitz Russian bots",
+    "Multiple Ukrainian drone strikes over the last week have taken Russian data centers offline and reportedly caused online bot traffic to plummet - but in reality it's probably not the kind of bot activity most people associate with Russia",
+    "A chart citing Cloudflare data has been circulating around social media platforms, showing a sharp decline [&#8230;]"
+  ],
+  "keywords": [
+    "The Yandex",
+    "Russian"
+  ],
+  "evidence": {
+    "source": "【entity-The Verge¦canonical_name=The Verge】",
+    "source_credibility": 85,
+    "has_link": true,
+    "has_summary": true,
+    "has_image": true,
+    "claims_count": 3,
+    "link": "https://www.theverge.com/tech/1009594/russian-bots-yandex-outage-drone-strikes-debunk",
+    "keywords": [
+      "The Yandex",
+      "Russian"
+    ]
+  },
+  "verified_at": "2026-10-12 21:48:49"
+}

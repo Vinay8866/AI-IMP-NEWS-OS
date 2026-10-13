@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | AI IMP NEWS OS</title>
+    <link rel="stylesheet" href="../styles/design-system.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/settings.css">
+</head>
+<body>
+<div class="app-layout">
+
+    <!-- ===== SIDEBAR (SAME ON ALL PAGES) ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">AI</div>
+            <div class="sidebar-logo-text">
+                IMP NEWS
+                <small>Operating System</small>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="sidebar-section-title">Main</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span> Dashboard
+            </a>
+            <a href="pipeline.html" class="nav-link">
+                <span class="nav-icon">🔄</span> Pipeline Journey
+            </a>
+            <a href="news-viewer.html" class="nav-link">
+                <span class="nav-icon">📰</span> News Viewer
+            </a>
+            <a href="analytics.html" class="nav-link">
+                <span class="nav-icon">📈</span> Analytics
+            </a>
+            <div class="sidebar-section-title">Content</div>
+            <a href="content-queue.html" class="nav-link">
+                <span class="nav-icon">✍️</span> Content Queue
+            </a>
+            <a href="scheduler.html" class="nav-link">
+                <span class="nav-icon">📅</span> Scheduler
+            </a>
+            <div class="sidebar-section-title">System</div>
+            <a href="settings.html" class="nav-link active">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+            <a href="logs.html" class="nav-link">
+                <span class="nav-icon">📋</span> Logs
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+                System Running
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1>Settings</h1>
+                <p>System configuration and API keys</p>
+            </div>
+        </header>
+
+        <!-- API KEY SETTINGS -->
+        <section>
+            <div class="clay-card" style="margin-bottom: var(--space-xl);">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: var(--space-lg);">🔑 API Configuration</h3>
+                <div class="settings-group">
+                    <div class="settings-row">
+                        <label class="settings-label">Gemini API Key</label>
+                        <input type="password" class="settings-input" id="gemini-key" placeholder="Enter Gemini API Key">
+                        <small class="settings-help">Get free key: <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a></small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSS FEEDS -->
+        <section>
+            <div class="clay-card" style="margin-bottom: var(--space-xl);">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: var(--space-lg);">📡 RSS Feed Sources</h3>
+                <div class="settings-group" id="rss-feeds-list">
+                    <div class="feed-item">
+                        <span class="feed-name">Google News</span>
+                        <span class="badge badge-success">Active</span>
+                    </div>
+                    <div class="feed-item">
+                        <span class="feed-name">TechCrunch</span>
+                        <span class="badge badge-success">Active</span>
+                    </div>
+                    <div class="feed-item">
+                        <span class="feed-name">Search Engine Journal</span>
+                        <span class="badge badge-success">Active</span>
+                    </div>
+                    <div class="feed-item">
+                        <span class="feed-name">HubSpot Blog</span>
+                        <span class="badge badge-success">Active</span>
+                    </div>
+                    <div class="feed-item">
+                        <span class="feed-name">Social Media Today</span>
+                        <span class="badge badge-success">Active</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SYSTEM INFO -->
+        <section>
+            <div class="clay-card">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: var(--space-lg);">💻 System Information</h3>
+                <div class="settings-group">
+                    <div class="info-row">
+                        <span class="info-label">Version</span>
+                        <span class="info-value">v2.0</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Platform</span>
+                        <span class="info-value">Windows 11 Pro</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Python</span>
+                        <span class="info-value">3.12+</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Database</span>
+                        <span class="info-value">SQLite</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">AI Model</span>
+                        <span class="info-value">Google Gemini</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script src="../scripts/api.js"></script>
+<script src="../scripts/utils.js"></script>
+</body>
+</html>

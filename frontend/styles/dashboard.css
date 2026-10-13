@@ -1,0 +1,41 @@
+/*
+  AI IMP NEWS OS
+  Dashboard Page Styles
+  Version: 2.0
+*/
+
+/* Extra Dashboard-specific styles */
+
+/* Pipeline section spacing */
+.pipeline-flow {
+    margin-bottom: var(--space-xl);
+}
+
+/* Queue table improvements */
+#queue-table-body .empty-state {
+    padding: var(--space-2xl) var(--space-lg);
+}
+
+/* Quality score coloring in table */
+.quality-high { color: var(--success); font-weight: 700; }
+.quality-medium { color: var(--warning); font-weight: 700; }
+.quality-low { color: var(--danger); font-weight: 700; }
+
+/* Decision badge in table */
+.decision-publish {
+    background: var(--success-light);
+    color: var(--success);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.decision-rewrite {
+    background: var(--warning-light);
+    color: var(--warning);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+}

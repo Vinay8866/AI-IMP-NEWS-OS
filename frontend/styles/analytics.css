@@ -1,0 +1,39 @@
+/*
+  AI IMP NEWS OS
+  Analytics Page Styles
+  Version: 2.0
+*/
+
+/* Analytics stats = 4 columns */
+.analytics-stats {
+    grid-template-columns: repeat(4, 1fr) !important;
+    margin-bottom: 32px;
+}
+
+/* Chart area */
+.chart-placeholder {
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F7F9FC;
+    border-radius: 12px;
+}
+
+/* Table empty state padding */
+#runs-table-body .empty-state {
+    padding: 40px 20px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .analytics-stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .analytics-stats {
+        grid-template-columns: 1fr !important;
+    }
+}

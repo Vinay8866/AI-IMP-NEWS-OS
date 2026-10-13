@@ -1,0 +1,20 @@
+{
+  "title": "The latest AI-powered martech news and releases",
+  "hook": "When it comes to SEO, general AI might not be your best bet. A new study says specialists win—and the latest martech releases prove it.",
+  "quality": 96,
+  "decision": "PUBLISH_QUEUE",
+  "confidence": 90,
+  "slug": "the-latest-ai-powered-martech-news-and-releases",
+  "image_status": "generated",
+  "image_path": "D:\\AI-IMP-NEWS-OS\\media\\images\\the-latest-ai-powered-martech-news-and-releases.jpg",
+  "fact_check": {
+    "passed": true,
+    "score": 100,
+    "notes": [
+      "Confidence OK",
+      "Claims found: 3",
+      "Source present",
+      "Summary present"
+    ]
+  }
+}

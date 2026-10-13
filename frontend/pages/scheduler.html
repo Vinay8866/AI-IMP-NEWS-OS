@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheduler - Buffer Calendar | AI IMP NEWS OS</title>
+    <link rel="stylesheet" href="../styles/design-system.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/scheduler.css">
+    <link rel="stylesheet" href="../styles/buffer.css">
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">AI</div>
+            <div class="sidebar-logo-text">IMP NEWS<small>Operating System</small></div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="sidebar-section-title">Main</div>
+            <a href="dashboard.html" class="nav-link"><span class="nav-icon">📊</span> Dashboard</a>
+            <a href="pipeline.html" class="nav-link"><span class="nav-icon">🔄</span> Pipeline Journey</a>
+            <a href="news-viewer.html" class="nav-link"><span class="nav-icon">📰</span> News Viewer</a>
+            <a href="analytics.html" class="nav-link"><span class="nav-icon">📈</span> Analytics</a>
+            <div class="sidebar-section-title">Content</div>
+            <a href="content-queue.html" class="nav-link"><span class="nav-icon">✍</span> Content Queue</a>
+            <a href="scheduler.html" class="nav-link active"><span class="nav-icon">📅</span> Scheduler</a>
+            <div class="sidebar-section-title">System</div>
+            <a href="settings.html" class="nav-link"><span class="nav-icon">⚙</span> Settings</a>
+            <a href="logs.html" class="nav-link"><span class="nav-icon">📋</span> Logs</a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-status"><span class="status-dot"></span> Buffer Calendar Active</div>
+        </div>
+    </aside>
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1>Scheduler - Buffer Calendar</h1>
+                <p>Pipeline Automation + Buffer Social Calendar</p>
+            </div>
+            <div class="topbar-right">
+                <button class="topbar-btn topbar-btn-outline" id="btn-run-now">▶ Run Pipeline Now</button>
+                <button class="topbar-btn topbar-btn-primary" id="btn-save-schedule">💾 Save Schedule</button>
+            </div>
+        </header>
+        <section class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="clay-card">
+                <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 16px;">⏰ Pipeline Schedule</h3>
+                <div class="schedule-slots" id="schedule-slots">
+                    <div class="schedule-slot">
+                        <span class="schedule-label">Morning</span>
+                        <input type="time" class="schedule-input" value="08:00" id="slot-1">
+                        <span class="badge badge-success">Active</span>
+                    </div>
+                    <div class="schedule-slot">
+                        <span class="schedule-label">Afternoon</span>
+                        <input type="time" class="schedule-input" value="16:00" id="slot-2">
+                        <span class="badge badge-success">Active</span>
+                    </div>
+                    <div class="schedule-slot">
+                        <span class="schedule-label">Night</span>
+                        <input type="time" class="schedule-input" value="00:00" id="slot-3">
+                        <span class="badge badge-info">Optional</span>
+                    </div>
+                </div>
+                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+                    <h4 style="font-size: 12px; margin-bottom: 8px;">📱 Buffer Optimal Times (IST)</h4>
+                    <div class="schedule-slots">
+                        <div class="schedule-slot">
+                            <span class="schedule-label">Morning Buzz</span>
+                            <input type="time" class="schedule-input" value="08:00" id="buffer-slot-1">
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-label">Lunch Peak</span>
+                            <input type="time" class="schedule-input" value="13:00" id="buffer-slot-2">
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-label">Evening Prime</span>
+                            <input type="time" class="schedule-input" value="19:00" id="buffer-slot-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clay-card">
+                <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 16px;">📊 Today - Pipeline + Social</h3>
+                <div class="schedule-timeline" id="schedule-timeline"></div>
+                <div class="buffer-today-list" id="buffer-today-list" style="margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px;">
+                    <h4 style="font-size: 12px; margin-bottom: 8px;">📱 Today's Buffer Posts</h4>
+                    <div id="today-buffer-posts">Loading...</div>
+                </div>
+            </div>
+            <div class="clay-card">
+                <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 16px;">⚡ Quick Actions</h3>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button class="topbar-btn topbar-btn-primary" style="width: 100%;" id="btn-run-buffer-check">📱 Run Buffer Check Now</button>
+                    <button class="topbar-btn topbar-btn-outline" style="width: 100%;" id="btn-pause">⏸ Pause Pipeline</button>
+                    <button class="topbar-btn topbar-btn-outline" style="width: 100%;" id="btn-history">📜 Run History</button>
+                    <button class="topbar-btn topbar-btn-outline" style="width: 100%; background: #1877F2; color: white; border: none;" id="btn-view-queue">📱 View Buffer Queue</button>
+                </div>
+                <div style="margin-top: 16px; padding: 12px; background: var(--bg-secondary); border-radius: 12px;">
+                    <div style="font-size: 12px; font-weight: 600; margin-bottom: 6px;">Buffer Status</div>
+                    <div id="buffer-status" style="font-size: 11px; color: var(--text-secondary);">Checking...</div>
+                </div>
+            </div>
+        </section>
+        <section style="margin-top: var(--space-xl);">
+            <div class="section-header">
+                <h2 class="section-title">📅 Buffer Calendar - Next 7 Days Social Schedule</h2>
+            </div>
+            <div class="clay-card">
+                <div class="buffer-calendar-grid" id="buffer-calendar">
+                    <div class="empty-state"><div class="empty-state-text">Loading calendar...</div></div>
+                </div>
+            </div>
+        </section>
+        <section style="margin-top: var(--space-xl);">
+            <div class="section-header">
+                <h2 class="section-title">Run History - Pipeline</h2>
+            </div>
+            <div class="clay-card">
+                <table class="data-table">
+                    <thead><tr><th>Date</th><th>Time</th><th>Duration</th><th>Articles</th><th>Status</th></tr></thead>
+                    <tbody id="history-table-body"><tr><td colspan="5"><div class="empty-state"><div class="empty-state-text">No run history yet</div></div></td></tr></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+<div class="toast-container" id="toast-container"></div>
+<script src="../scripts/api.js"></script>
+<script src="../scripts/utils.js"></script>
+<script src="../scripts/scheduler.js"></script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Queue | AI IMP NEWS OS</title>
+    <link rel="stylesheet" href="../styles/design-system.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/content-queue.css">
+</head>
+<body>
+<div class="app-layout">
+
+    <!-- ===== SIDEBAR (SAME ON ALL PAGES) ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">AI</div>
+            <div class="sidebar-logo-text">
+                IMP NEWS
+                <small>Operating System</small>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="sidebar-section-title">Main</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span> Dashboard
+            </a>
+            <a href="pipeline.html" class="nav-link">
+                <span class="nav-icon">🔄</span> Pipeline Journey
+            </a>
+            <a href="news-viewer.html" class="nav-link">
+                <span class="nav-icon">📰</span> News Viewer
+            </a>
+            <a href="analytics.html" class="nav-link">
+                <span class="nav-icon">📈</span> Analytics
+            </a>
+            <div class="sidebar-section-title">Content</div>
+            <a href="content-queue.html" class="nav-link active">
+                <span class="nav-icon">✍️</span> Content Queue
+            </a>
+            <a href="scheduler.html" class="nav-link">
+                <span class="nav-icon">📅</span> Scheduler
+            </a>
+            <div class="sidebar-section-title">System</div>
+            <a href="settings.html" class="nav-link">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+            <a href="logs.html" class="nav-link">
+                <span class="nav-icon">📋</span> Logs
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+                System Running
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1>Content Queue</h1>
+                <p>Publish Queue और Rewrite Queue में सारे Articles</p>
+            </div>
+            <div class="topbar-right">
+                <button class="topbar-btn topbar-btn-primary" id="btn-refresh">🔄 Refresh</button>
+            </div>
+        </header>
+
+        <!-- STATS -->
+        <section class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="stat-card green">
+                <div class="stat-card-header">
+                    <span class="stat-card-label">Publish Queue</span>
+                    <div class="stat-card-icon">📤</div>
+                </div>
+                <div class="stat-card-value" id="cq-publish">0</div>
+                <div class="stat-card-change up">Ready to publish</div>
+            </div>
+            <div class="stat-card orange">
+                <div class="stat-card-header">
+                    <span class="stat-card-label">Rewrite Queue</span>
+                    <div class="stat-card-icon">✏️</div>
+                </div>
+                <div class="stat-card-value" id="cq-rewrite">0</div>
+                <div class="stat-card-change">Needs improvement</div>
+            </div>
+        </section>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab active" data-queue="publish">📤 Publish Queue</button>
+            <button class="tab" data-queue="rewrite">✏️ Rewrite Queue</button>
+        </div>
+
+        <!-- Publish Queue -->
+        <div class="tab-content active" id="tab-publish">
+            <div class="queue-grid" id="publish-queue-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <div class="empty-state-text">No articles in publish queue</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rewrite Queue -->
+        <div class="tab-content" id="tab-rewrite">
+            <div class="queue-grid" id="rewrite-queue-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <div class="empty-state-text">No articles in rewrite queue</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script src="../scripts/api.js"></script>
+<script src="../scripts/utils.js"></script>
+<script src="../scripts/content-queue.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Queue - Buffer Clone | AI IMP NEWS OS</title>
+    <link rel="stylesheet" href="../styles/design-system.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/content-queue.css">
+    <link rel="stylesheet" href="../styles/buffer.css">
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">AI</div>
+            <div class="sidebar-logo-text">IMP NEWS<small>Operating System</small></div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="sidebar-section-title">Main</div>
+            <a href="dashboard.html" class="nav-link"><span class="nav-icon">📊</span> Dashboard</a>
+            <a href="pipeline.html" class="nav-link"><span class="nav-icon">🔄</span> Pipeline Journey</a>
+            <a href="news-viewer.html" class="nav-link"><span class="nav-icon">📰</span> News Viewer</a>
+            <a href="analytics.html" class="nav-link"><span class="nav-icon">📈</span> Analytics</a>
+            <div class="sidebar-section-title">Content</div>
+            <a href="content-queue.html" class="nav-link active"><span class="nav-icon">✍</span> Content Queue</a>
+            <a href="scheduler.html" class="nav-link"><span class="nav-icon">📅</span> Scheduler</a>
+            <div class="sidebar-section-title">System</div>
+            <a href="settings.html" class="nav-link"><span class="nav-icon">⚙</span> Settings</a>
+            <a href="logs.html" class="nav-link"><span class="nav-icon">📋</span> Logs</a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-status"><span class="status-dot"></span> Buffer Clone Active</div>
+        </div>
+    </aside>
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1>Content Queue - Buffer Clone</h1>
+                <p>Publish Queue → Social Buffer Queue → Auto Posting</p>
+            </div>
+            <div class="topbar-right">
+                <button class="topbar-btn topbar-btn-outline" id="btn-refresh">🔄 Refresh</button>
+                <button class="topbar-btn topbar-btn-primary" id="btn-auto-schedule">🚀 Auto-Schedule All to Social</button>
+            </div>
+        </header>
+        <!-- BUFFER STATS -->
+        <section class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="stat-card green">
+                <div class="stat-card-header">
+                    <span class="stat-card-label">Publish Queue</span>
+                    <div class="stat-card-icon">📤</div>
+                </div>
+                <div class="stat-card-value" id="cq-publish">0</div>
+                <div class="stat-card-change up">Ready for website</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-card-header">
+                    <span class="stat-card-label">Buffer - Scheduled</span>
+                    <div class="stat-card-icon">📅</div>
+                </div>
+                <div class="stat-card-value" id="buffer-scheduled">0</div>
+                <div class="stat-card-change up">Waiting to post</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-card-header">
+                    <span class="stat-card-label">Buffer - Posted</span>
+                    <div class="stat-card-icon">✅</div>
+                </div>
+                <div class="stat-card-value" id="buffer-posted">0</div>
+                <div class="stat-card-change">Live on FB/IG</div>
+            </div>
+            <div class="stat-card orange">
+                <div class="stat-card-header">
+                    <span class="stat-card-label">Rewrite Queue</span>
+                    <div class="stat-card-icon">✏</div>
+                </div>
+                <div class="stat-card-value" id="cq-rewrite">0</div>
+                <div class="stat-card-change">Needs improvement</div>
+            </div>
+        </section>
+        <!-- TABS - Buffer Style -->
+        <div class="tabs" style="margin-top: 24px;">
+            <button class="tab active" data-queue="publish">📤 Publish Queue <span class="tab-count" id="tab-count-publish">0</span></button>
+            <button class="tab" data-queue="buffer">📱 Buffer Queue <span class="tab-count" id="tab-count-buffer">0</span></button>
+            <button class="tab" data-queue="posted">✅ Posted <span class="tab-count" id="tab-count-posted">0</span></button>
+            <button class="tab" data-queue="rewrite">✏ Rewrite Queue <span class="tab-count" id="tab-count-rewrite">0</span></button>
+        </div>
+        <!-- Publish Queue Tab -->
+        <div class="tab-content active" id="tab-publish">
+            <div class="buffer-info-bar">
+                <span>📰 Ye articles website ke liye ready hai. Inko Buffer Queue me add karo social media pe post karne ke liye.</span>
+            </div>
+            <div class="queue-grid" id="publish-queue-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <div class="empty-state-text">No articles in publish queue - Run pipeline first</div>
+                </div>
+            </div>
+        </div>
+        <!-- Buffer Queue Tab - MAIN BUFFER CLONE -->
+        <div class="tab-content" id="tab-buffer">
+            <div class="buffer-info-bar blue">
+                <span>📱 Buffer Style Queue - Ye posts schedule kiye gaye hai FB + IG pe. Har 2 min me checker chalega aur due posts auto-post karega.</span>
+                <button class="topbar-btn topbar-btn-outline" style="padding: 6px 12px; font-size: 12px;" id="btn-refresh-buffer">🔄 Refresh Buffer</button>
+            </div>
+            <div class="queue-grid buffer-grid" id="buffer-queue-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📱</div>
+                    <div class="empty-state-text">Buffer queue empty - Click "Auto-Schedule All to Social" or add from Publish Queue</div>
+                </div>
+            </div>
+        </div>
+        <!-- Posted Tab -->
+        <div class="tab-content" id="tab-posted">
+            <div class="queue-grid" id="posted-queue-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">✅</div>
+                    <div class="empty-state-text">No posted items yet</div>
+                </div>
+            </div>
+        </div>
+        <!-- Rewrite Queue -->
+        <div class="tab-content" id="tab-rewrite">
+            <div class="queue-grid" id="rewrite-queue-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <div class="empty-state-text">No articles in rewrite queue</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<!-- Buffer Edit Modal -->
+<div class="modal-overlay" id="buffer-edit-modal" style="display: none;">
+    <div class="modal clay-card" style="max-width: 600px; width: 90%;">
+        <div class="modal-header">
+            <h3>📱 Edit Buffer Post</h3>
+            <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Caption (Hook + Hashtags)</label>
+                <textarea id="modal-caption" rows="6" class="form-textarea" placeholder="Edit caption..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Platforms</label>
+                <div class="platform-checkboxes">
+                    <label><input type="checkbox" value="facebook" id="plat-fb" checked> 📘 Facebook</label>
+                    <label><input type="checkbox" value="instagram" id="plat-ig" checked> 📸 Instagram</label>
+                    <label><input type="checkbox" value="linkedin" id="plat-li"> 💼 LinkedIn</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Scheduled At</label>
+                <input type="datetime-local" id="modal-scheduled-at" class="form-input">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="topbar-btn topbar-btn-outline" id="modal-cancel">Cancel</button>
+            <button class="topbar-btn topbar-btn-primary" id="modal-save">💾 Save Changes</button>
+        </div>
+    </div>
+</div>
+<div class="toast-container" id="toast-container"></div>
+<script src="../scripts/api.js"></script>
+<script src="../scripts/utils.js"></script>
+<script src="../scripts/content-queue.js"></script>
+</body>
+</html>

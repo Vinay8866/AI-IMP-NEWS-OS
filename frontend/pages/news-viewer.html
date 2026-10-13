@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Viewer | AI IMP NEWS OS</title>
+    <link rel="stylesheet" href="../styles/design-system.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/news-viewer.css">
+</head>
+<body>
+<div class="app-layout">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">AI</div>
+            <div class="sidebar-logo-text">
+                IMP NEWS
+                <small>Operating System</small>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="sidebar-section-title">Main</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span> Dashboard
+            </a>
+            <a href="pipeline.html" class="nav-link">
+                <span class="nav-icon">🔄</span> Pipeline Journey
+            </a>
+            <a href="news-viewer.html" class="nav-link active">
+                <span class="nav-icon">📰</span> News Viewer
+            </a>
+            <a href="analytics.html" class="nav-link">
+                <span class="nav-icon">📈</span> Analytics
+            </a>
+
+            <div class="sidebar-section-title">Content</div>
+            <a href="content-queue.html" class="nav-link">
+                <span class="nav-icon">✍️</span> Content Queue
+            </a>
+            <a href="scheduler.html" class="nav-link">
+                <span class="nav-icon">📅</span> Scheduler
+            </a>
+
+            <div class="sidebar-section-title">System</div>
+            <a href="settings.html" class="nav-link">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+            <a href="logs.html" class="nav-link">
+                <span class="nav-icon">📋</span> Logs
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+                System Running
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1>News Viewer</h1>
+                <p>हर Stage का Content, Image और Final Preview देखें</p>
+            </div>
+            <div class="topbar-right">
+                <select class="dropdown" id="date-selector">
+                    <option value="latest">Latest Run</option>
+                </select>
+                <button class="topbar-btn topbar-btn-primary" id="btn-refresh">
+                    🔄 Refresh
+                </button>
+            </div>
+        </header>
+
+        <!-- STAGE TABS - Big Tabs for Different Stages -->
+        <div class="stage-tabs-container">
+            <button class="stage-tab active" data-stage="raw">
+                <div class="stage-tab-icon">📡</div>
+                <div class="stage-tab-label">Raw News</div>
+                <div class="stage-tab-count" id="count-raw">0</div>
+            </button>
+            <div class="stage-tab-arrow">→</div>
+
+            <button class="stage-tab" data-stage="selected">
+                <div class="stage-tab-icon">⭐</div>
+                <div class="stage-tab-label">Selected 6</div>
+                <div class="stage-tab-count" id="count-selected">0</div>
+            </button>
+            <div class="stage-tab-arrow">→</div>
+
+            <button class="stage-tab" data-stage="verified">
+                <div class="stage-tab-icon">✅</div>
+                <div class="stage-tab-label">Verified</div>
+                <div class="stage-tab-count" id="count-verified">0</div>
+            </button>
+            <div class="stage-tab-arrow">→</div>
+
+            <button class="stage-tab" data-stage="humanized">
+                <div class="stage-tab-icon">✍️</div>
+                <div class="stage-tab-label">Humanized</div>
+                <div class="stage-tab-count" id="count-humanized">0</div>
+            </button>
+            <div class="stage-tab-arrow">→</div>
+
+            <button class="stage-tab" data-stage="image">
+                <div class="stage-tab-icon">🎨</div>
+                <div class="stage-tab-label">With Image</div>
+                <div class="stage-tab-count" id="count-image">0</div>
+            </button>
+            <div class="stage-tab-arrow">→</div>
+
+            <button class="stage-tab" data-stage="final">
+                <div class="stage-tab-icon">🏆</div>
+                <div class="stage-tab-label">Final Posts</div>
+                <div class="stage-tab-count" id="count-final">0</div>
+            </button>
+        </div>
+
+        <!-- ========== STAGE 1: RAW NEWS ========== -->
+        <section class="stage-content active" id="stage-raw">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">📡 Stage 1 — Raw News Collection</h2>
+                    <p class="section-subtitle">RSS से इकट्ठा हुई सभी News (50+)</p>
+                </div>
+            </div>
+
+            <div class="viewer-grid" id="raw-viewer-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📡</div>
+                    <div class="empty-state-text">Raw News लोड हो रही है...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== STAGE 2: SELECTED 6 ========== -->
+        <section class="stage-content" id="stage-selected">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">⭐ Stage 2 — Selected Top 6 News</h2>
+                    <p class="section-subtitle">AI Agent ने इन 6 News को चुना</p>
+                </div>
+            </div>
+
+            <div class="viewer-grid" id="selected-viewer-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">⭐</div>
+                    <div class="empty-state-text">Selected News लोड हो रही हैं...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== STAGE 3: VERIFIED ========== -->
+        <section class="stage-content" id="stage-verified">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">✅ Stage 3 — Verified News with Full Content</h2>
+                    <p class="section-subtitle">Cross-source Verification के साथ Full Content</p>
+                </div>
+            </div>
+
+            <div class="viewer-grid-full" id="verified-viewer-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">✅</div>
+                    <div class="empty-state-text">Verified News लोड हो रही हैं...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== STAGE 4: HUMANIZED ========== -->
+        <section class="stage-content" id="stage-humanized">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">✍️ Stage 4 — Human-Written Content</h2>
+                    <p class="section-subtitle">Hook + Story + Quality Score के साथ Humanized Content</p>
+                </div>
+            </div>
+
+            <div class="viewer-grid-full" id="humanized-viewer-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">✍️</div>
+                    <div class="empty-state-text">Humanized Content लोड हो रहा है...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== STAGE 5: WITH IMAGE ========== -->
+        <section class="stage-content" id="stage-image">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">🎨 Stage 5 — Content + Generated Image</h2>
+                    <p class="section-subtitle">Humanized Content के साथ AI-Generated Image</p>
+                </div>
+            </div>
+
+            <div class="viewer-grid-full" id="image-viewer-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🎨</div>
+                    <div class="empty-state-text">Images Load हो रही हैं...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== STAGE 6: FINAL POSTS ========== -->
+        <section class="stage-content" id="stage-final">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">🏆 Stage 6 — Final Published Posts</h2>
+                    <p class="section-subtitle">Ready-to-Publish Final Content with Image, SEO & Everything</p>
+                </div>
+            </div>
+
+            <div class="final-grid" id="final-viewer-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🏆</div>
+                    <div class="empty-state-text">Final Posts लोड हो रहे हैं...</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- ========== FULL ARTICLE MODAL ========== -->
+<div class="modal-overlay" id="article-modal">
+    <div class="modal modal-large">
+        <div class="modal-header">
+            <h3 class="modal-title" id="am-title">Article Preview</h3>
+            <button class="modal-close" id="am-close">✕</button>
+        </div>
+        <div class="modal-body">
+            <!-- Image Preview -->
+            <div class="am-image-wrapper">
+                <img id="am-image" src="" alt="Article Image" onerror="this.style.display='none'">
+                <div class="am-image-placeholder" id="am-image-placeholder">🖼️ Image Not Available</div>
+            </div>
+
+            <!-- Meta -->
+            <div class="am-meta-row">
+                <span class="am-meta-item"><strong>Source:</strong> <span id="am-source">-</span></span>
+                <span class="am-meta-item"><strong>Category:</strong> <span id="am-category">-</span></span>
+                <span class="am-meta-item"><strong>Score:</strong> <span id="am-score">-</span></span>
+            </div>
+
+            <!-- Hook -->
+            <div class="am-section">
+                <h4 class="am-section-title">🎣 Hook</h4>
+                <p class="am-hook" id="am-hook">-</p>
+            </div>
+
+            <!-- Full Story -->
+            <div class="am-section">
+                <h4 class="am-section-title">📖 Full Story / Content</h4>
+                <div class="am-story" id="am-story">-</div>
+            </div>
+
+            <!-- SEO Info -->
+            <div class="am-section">
+                <h4 class="am-section-title">🔍 SEO Details</h4>
+                <div class="am-seo-grid">
+                    <div><strong>Slug:</strong> <span id="am-slug">-</span></div>
+                    <div><strong>Meta Title:</strong> <span id="am-meta-title">-</span></div>
+                </div>
+            </div>
+
+            <!-- Image Prompt -->
+            <div class="am-section">
+                <h4 class="am-section-title">🎨 Image Prompt (AI उसे image बनाने के लिए)</h4>
+                <code class="am-code" id="am-image-prompt">-</code>
+            </div>
+
+            <!-- Verification -->
+            <div class="am-section">
+                <h4 class="am-section-title">✅ Verification Info</h4>
+                <div class="am-verify-grid">
+                    <div><strong>Confidence:</strong> <span id="am-confidence">-</span></div>
+                    <div><strong>Claims:</strong> <span id="am-claims">-</span></div>
+                </div>
+            </div>
+
+            <!-- Original Link -->
+            <div class="am-section">
+                <h4 class="am-section-title">🔗 Original Source Link</h4>
+                <a id="am-link" href="#" target="_blank" class="am-link">-</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script src="../scripts/api.js"></script>
+<script src="../scripts/utils.js"></script>
+<script src="../scripts/news-viewer.js"></script>
+</body>
+</html>

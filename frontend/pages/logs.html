@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs | AI IMP NEWS OS</title>
+    <link rel="stylesheet" href="../styles/design-system.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/logs.css">
+</head>
+<body>
+<div class="app-layout">
+
+    <!-- ===== SIDEBAR (SAME ON ALL PAGES) ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">AI</div>
+            <div class="sidebar-logo-text">
+                IMP NEWS
+                <small>Operating System</small>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="sidebar-section-title">Main</div>
+            <a href="dashboard.html" class="nav-link">
+                <span class="nav-icon">📊</span> Dashboard
+            </a>
+            <a href="pipeline.html" class="nav-link">
+                <span class="nav-icon">🔄</span> Pipeline Journey
+            </a>
+            <a href="news-viewer.html" class="nav-link">
+                <span class="nav-icon">📰</span> News Viewer
+            </a>
+            <a href="analytics.html" class="nav-link">
+                <span class="nav-icon">📈</span> Analytics
+            </a>
+            <div class="sidebar-section-title">Content</div>
+            <a href="content-queue.html" class="nav-link">
+                <span class="nav-icon">✍️</span> Content Queue
+            </a>
+            <a href="scheduler.html" class="nav-link">
+                <span class="nav-icon">📅</span> Scheduler
+            </a>
+            <div class="sidebar-section-title">System</div>
+            <a href="settings.html" class="nav-link">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+            <a href="logs.html" class="nav-link active">
+                <span class="nav-icon">📋</span> Logs
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+                System Running
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1>System Logs</h1>
+                <p>सारी Pipeline Activities के Logs</p>
+            </div>
+            <div class="topbar-right">
+                <button class="topbar-btn topbar-btn-outline" id="btn-clear">🗑️ Clear Logs</button>
+                <button class="topbar-btn topbar-btn-primary" id="btn-refresh">🔄 Refresh</button>
+            </div>
+        </header>
+
+        <div class="clay-card">
+            <div class="logs-console" id="logs-console">
+                <div class="log-line log-info">
+                    <span class="log-timestamp">[System]</span> AI IMP NEWS OS v2.0 started
+                </div>
+                <div class="log-line log-success">
+                    <span class="log-timestamp">[System]</span> Frontend loaded successfully
+                </div>
+                <div class="log-line log-info">
+                    <span class="log-timestamp">[System]</span> Waiting for backend connection...
+                </div>
+                <div class="log-line log-warning">
+                    <span class="log-timestamp">[System]</span> Backend not running yet. Start with: python -m app.server
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script src="../scripts/api.js"></script>
+<script src="../scripts/utils.js"></script>
+<script src="../scripts/logs.js"></script>
+</body>
+</html>

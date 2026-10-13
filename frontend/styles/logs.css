@@ -1,0 +1,31 @@
+/*
+  AI IMP NEWS OS
+  Logs Page Styles
+*/
+
+.logs-console {
+    background: #1A1A2E;
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    max-height: 70vh;
+    overflow-y: auto;
+    color: #E0E0E0;
+}
+
+.log-line {
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.log-line:last-child {
+    border-bottom: none;
+}
+
+.log-info { color: #A29BFE; }
+.log-success { color: #00C853; }
+.log-warning { color: #FF9800; }
+.log-error { color: #FF5252; }
+.log-timestamp { color: #64748B; margin-right: 8px; }

@@ -1,0 +1,32 @@
+/*
+  AI IMP NEWS OS
+  Pipeline Page Styles
+  Version: 2.0
+*/
+
+/* Pipeline stats uses 4 columns */
+.pipeline-stats {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Raw news collapsed by default */
+.raw-news-collapsed {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.raw-news-collapsed.expanded {
+    max-height: 10000px;
+}
+
+/* Raw news section */
+.raw-news-section {
+    margin-top: var(--space-2xl);
+}
+
+@media (max-width: 1024px) {
+    .pipeline-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "title": "The Yandex outage probably didn’t blitz Russian bots",
+  "hook": "Ukrainian drone strikes recently knocked Russian data centers offline, causing automated web traffic to crater. It looked like a sudden victory against Kremlin troll farms—but the reality is much less cinematic.",
+  "quality": 97,
+  "decision": "PUBLISH_QUEUE",
+  "confidence": 94,
+  "slug": "the-yandex-outage-probably-didnt-blitz-russian-bots",
+  "image_status": "generated",
+  "image_path": "D:\\AI-IMP-NEWS-OS\\media\\images\\the-yandex-outage-probably-didnt-blitz-russian-bots.jpg",
+  "fact_check": {
+    "passed": true,
+    "score": 100,
+    "notes": [
+      "Confidence OK",
+      "Claims found: 3",
+      "Source present",
+      "Summary present"
+    ]
+  }
+}
